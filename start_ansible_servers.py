@@ -15,7 +15,7 @@ def start_ec2_fleet(node1, node2, node3):
         ],
     )
 
-def get_public_ips(node1, node2, node3, zshrc_file, line_number1, line_number2, line_number3):
+def get_public_ips(node1, node2, node3, zshrc_file, line_number1, line_number2, line_number3, inv_file):
     print()
     print('Waiting for instances to start...')
     ec2 = boto3.client('ec2')
@@ -46,6 +46,16 @@ def get_public_ips(node1, node2, node3, zshrc_file, line_number1, line_number2, 
     with open(zshrc_file, 'w') as file:
         file.writelines(lines)  
 
+    with open(inv_file, 'r') as file:
+        lines = file.readlines()
+    
+    lines[0] = f'{new_ips[0]} \n'
+    lines[1] = f'{new_ips[1]} \n'
+    lines[2] = f'{new_ips[2]} \n'
+
+    with open(inv_file, 'w') as file:
+        file.writelines(lines)
+
     print()
     print('New IPs of fleet successfully written to config file')
     print('To SSH into instances use "ssh <$ANode1, $ANode2, $ANode3>"')
@@ -57,11 +67,12 @@ def main():
     node2 ='i-0872672d57ec39b3a'
     node3 ='i-029242cf135dd859f'
     zshrc_file ='/Users/Kris/.zshrc'
+    inv_file = 'inventory'
     line_number1 = 11
     line_number2 = 12
     line_number3 = 13
     start_ec2_fleet(node1, node2, node3)
-    get_public_ips(node1, node2, node3, zshrc_file, line_number1, line_number2, line_number3)
+    get_public_ips(node1, node2, node3, zshrc_file, line_number1, line_number2, line_number3, inv_file)
 
 
 if __name__ == '__main__':
