@@ -5,23 +5,26 @@
   tasks:
 
     - name: Install Apache Package
-      yum:
+      dnf:
         name: httpd
         state: latest
+      when: ansible_distribution == "RedHat"
 
     - name: Start Apache Service
       service:
         name: httpd
         state: started
         enabled: yes
+      when: ansible_distribution == "RedHat"
 
     - name: Update Repository Index
-      yum:
+      dnf:
         update_cache: yes
 
     - name: Add PHP support for Apache
-      yum:
+      dnf:
         name: php
         state: latest
+      when: ansible_distribution == "RedHat"
 
 
