@@ -1,0 +1,17 @@
+- hosts: all
+  become: yes
+  tasks:
+
+    - name: Remove Apache Package
+      yum:
+        name: httpd
+        state: absent
+
+    - name: Update Repository Index
+      yum:
+        update_cache: yes
+
+    - name: Remove PHP
+      yum:
+        name: php
+        state: absent
