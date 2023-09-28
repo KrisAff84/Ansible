@@ -1,7 +1,23 @@
 ---
 
 - hosts: all
-  become: yes
+  become: true
+  tasks:
+
+    - name: Install Updates (RedHat)
+      dnf:
+        update_only: yes
+        update_cache: yes
+      when: ansible_distribution == "RedHat"
+      
+    - name: Install Updates (Ubuntu)
+      apt:
+        upgrade: dist
+        update_cache: yes
+      when: ansible_distribution == "Ubuntu"
+  
+- hosts: web_servers
+  become: true
   tasks:
 
     - name: Install Apache and PHP Packages for RedHat Servers
@@ -10,7 +26,6 @@
           - httpd
           - php
         state: latest
-        update_cache: yes
       when: ansible_distribution == "RedHat"
 
     - name: Install Apache2 and PHP Packages for Ubuntu Servers
@@ -19,7 +34,6 @@
           - apache2
           - libapache2-mod-php
         state: latest
-        update_cache: yes
       when: ansible_distribution == "Ubuntu"
   
     - name: Start Apache Service for RedHat Servers
