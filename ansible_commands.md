@@ -16,3 +16,7 @@ when: ansible_distribution == "<distro>"
 # Not an ansible command - to install EPEL for RHEL 9
 sudo dnf install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-9.noarch.rpm
 sudo dnf config-manager --set-enabled epel
+
+# To run ansible playbook
+ansible-playbook --ask-become-pass <file_name>     or
+ansible-playbook -K <file_name>
