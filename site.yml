@@ -22,6 +22,28 @@
       when: ansible_distribution == "Ubuntu"
 
 #########################################################
+# Workstations
+#########################################################
+
+- hosts: workstations
+  become: true
+  tasks: 
+
+    - name: Install unzip
+      package:
+        name: unzip
+        state: latest
+    
+    - name: Install Terraform
+      unarchive: 
+        src: https://releases.hashicorp.com/terraform/1.5.4/terraform_1.5.4_linux_amd64.zip
+        dest: /usr/local/bin
+        remote_src: yes
+        mode: 0755
+        owner: root
+        group: root
+
+#########################################################
 # Web Servers
 #########################################################
 
@@ -54,6 +76,15 @@
         state: started
         enabled: yes
       when: ansible_distribution == "RedHat"
+    
+    - name: Copy HTML files for website (RedHat)
+      tags: apache, httpd, apache2
+      copy:
+        src: default_site.html
+        dest: /var/www/html/index.html
+        owner: root
+        group: root
+        mode: 0644
 
 #########################################################
 # Database Servers

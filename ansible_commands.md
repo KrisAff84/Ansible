@@ -24,6 +24,11 @@ ansible-playbook -K <file_name>
 # To list available tags
 ansible-playbook --list-tags <file>
 
-# To run tasks associated with specific tags
+# To run tasks associated with specific tag
 ansible-playbook --tags <tags> -K <file>
 
+# To run tasks associated with multiple tags
+ansible-playbook --tags "<tag>,<tag>" -K <file>
+
+# When using copy module the src directory is assumed to be files
+# No need to write "files" if the file to be copied is inside
