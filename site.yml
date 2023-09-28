@@ -1,26 +1,36 @@
 ---
+#########################################################
+# All Hosts
+#########################################################
 
 - hosts: all
   become: true
-  tasks:
+  pre_tasks:
 
     - name: Install Updates (RedHat)
+      tags: always
       dnf:
         update_only: yes
         update_cache: yes
       when: ansible_distribution == "RedHat"
       
     - name: Install Updates (Ubuntu)
+      tags: always
       apt:
         upgrade: dist
         update_cache: yes
       when: ansible_distribution == "Ubuntu"
-  
+
+#########################################################
+# Web Servers
+#########################################################
+
 - hosts: web_servers
   become: true
   tasks:
 
     - name: Install Apache and PHP Packages for RedHat Servers
+      tags: apache, httpd, redhat
       dnf:
         name: 
           - httpd
@@ -29,6 +39,7 @@
       when: ansible_distribution == "RedHat"
 
     - name: Install Apache2 and PHP Packages for Ubuntu Servers
+      tags: apache, apache2, ubuntu
       apt:
         name: 
           - apache2
@@ -37,8 +48,61 @@
       when: ansible_distribution == "Ubuntu"
   
     - name: Start Apache Service for RedHat Servers
+      tags: apache, httpd, redhat
       service:
         name: httpd
+        state: started
+        enabled: yes
+      when: ansible_distribution == "RedHat"
+
+#########################################################
+# Database Servers
+#########################################################
+
+- hosts: db_servers
+  become: true
+  tasks: 
+
+  - name: Install MariaDB Package (RedHat)
+    tags: mariadb, redhat, db
+    dnf:
+      name: mariadb-server
+      state: latest
+    when: ansible_distribution == "RedHat"
+
+  - name: Start MariaDB Service (RedHat)
+    tags: mariadb, redhat, db
+    service:
+      name: mariadb
+      state: started
+      enabled: yes
+    when: ansible_distribution == "RedHat"
+
+  - name: Install MariaDB Package (Ubuntu)
+    tags: mariadb, ubuntu, db
+    apt:
+      name: mariadb-server
+      state: latest
+    when: ansible_distribution == "Ubuntu"
+
+#########################################################
+# File Servers
+#########################################################
+
+- hosts: file_servers
+  become: true
+  tasks:
+
+    - name: Install Samba Package
+      tags: samba
+      package:
+        name: samba
+        state: latest
+    
+    - name: Start Samba Service
+      tags: samba
+      service:
+        name: smb
         state: started
         enabled: yes
       when: ansible_distribution == "RedHat"

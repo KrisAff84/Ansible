@@ -20,3 +20,10 @@ sudo dnf config-manager --set-enabled epel
 # To run ansible playbook
 ansible-playbook --ask-become-pass <file_name>     or
 ansible-playbook -K <file_name>
+
+# To list available tags
+ansible-playbook --list-tags <file>
+
+# To run tasks associated with specific tags
+ansible-playbook --tags <tags> -K <file>
+
