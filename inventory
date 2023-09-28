@@ -6,3 +6,6 @@ ec2-user@35.88.255.77
 
 [file_servers]
 ec2-user@18.236.73.231 
+
+[workstations]
+24.162.52.74
