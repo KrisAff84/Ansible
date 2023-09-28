@@ -5,13 +5,12 @@
   tasks:
 
     - name: Install Apache and PHP Packages
-      dnf:
+      package:
         name: 
-          - httpd
-          - php
+          - "{{ apache_pkg }}"
+          - "{{ php_pkg }}"
         state: latest
         update_cache: yes
-      when: ansible_distribution == "RedHat"
 
     - name: Start Apache Service
       service:
@@ -19,13 +18,4 @@
         state: started
         enabled: yes
       when: ansible_distribution == "RedHat"
-
-    - name: Install Apache2 and PHP Packages
-      apt:
-        name: 
-          - apache2
-          - libapache2-mod-php
-        state: latest
-        update_cache: yes
-      when: ansible_distribution == "Ubuntu"
   

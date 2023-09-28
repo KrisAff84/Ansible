@@ -4,7 +4,7 @@
   become: yes
   tasks:
 
-    - name: Install Apache and PHP Packages
+    - name: Install Apache and PHP Packages for RedHat Servers
       dnf:
         name: 
           - httpd
@@ -13,14 +13,7 @@
         update_cache: yes
       when: ansible_distribution == "RedHat"
 
-    - name: Start Apache Service
-      service:
-        name: httpd
-        state: started
-        enabled: yes
-      when: ansible_distribution == "RedHat"
-
-    - name: Install Apache2 and PHP Packages
+    - name: Install Apache2 and PHP Packages for Ubuntu Servers
       apt:
         name: 
           - apache2
@@ -29,3 +22,9 @@
         update_cache: yes
       when: ansible_distribution == "Ubuntu"
   
+    - name: Start Apache Service for RedHat Servers
+      service:
+        name: httpd
+        state: started
+        enabled: yes
+      when: ansible_distribution == "RedHat"
