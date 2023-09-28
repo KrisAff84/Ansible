@@ -49,9 +49,9 @@ def get_public_ips(node1, node2, node3, zshrc_file, line_number1, line_number2, 
     with open(inv_file, 'r') as file:
         lines = file.readlines()
     
-    lines[0] = f'ec2-user@{new_ips[0]} \n'
-    lines[1] = f'ec2-user@{new_ips[1]} \n'
-    lines[2] = f'ec2-user@{new_ips[2]} \n'
+    lines[1] = f'ec2-user@{new_ips[0]} \n'
+    lines[4] = f'ec2-user@{new_ips[1]} \n'
+    lines[7] = f'ec2-user@{new_ips[2]} \n'
 
     with open(inv_file, 'w') as file:
         file.writelines(lines)
