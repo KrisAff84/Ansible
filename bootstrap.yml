@@ -22,6 +22,20 @@
       when: ansible_distribution == "Ubuntu"
 
 #########################################################
+# Enable EPEL on RHEL 9
+#########################################################
+
+- hosts: all
+  become: yes
+  tasks: 
+
+  - name: Enable EPEL
+    shell: |
+      dnf install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-9.noarch.rpm
+      dnf config-manager --set-enabled epel
+    when: ansible_distribution == "RedHat" and ansible_distribution_major_version == "9"
+
+#########################################################
 # All Hosts - Create User
 #########################################################
 
