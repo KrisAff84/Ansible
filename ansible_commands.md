@@ -32,3 +32,6 @@ ansible-playbook --tags "<tag>,<tag>" -K <file>
 
 # When using copy module the src directory is assumed to be files
 # No need to write "files" if the file to be copied is inside
+
+# ********** Why can't I connect to local host ??? ####################
+# Figured it out, see localsetup.yml for example of setting up on MacOS
