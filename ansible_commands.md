@@ -35,3 +35,6 @@ ansible-playbook --tags "<tag>,<tag>" -K <file>
 
 # ********** Why can't I connect to local host ??? ####################
 # Figured it out, see localsetup.yml for example of setting up on MacOS
+
+# Use 'lineinfile' module for changing a line in a file
+
