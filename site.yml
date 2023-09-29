@@ -1,25 +1,39 @@
 ---
 #########################################################
-# All Hosts
+# All Hosts - Update Cache
 #########################################################
 
 - hosts: all
   become: true
   pre_tasks:
 
-    - name: Install Updates (RedHat)
+    - name: Update Repo Cache (RedHat)
       tags: always
       dnf:
-        update_only: yes
         update_cache: yes
+      changed_when: false
       when: ansible_distribution == "RedHat"
       
-    - name: Install Updates (Ubuntu)
+    - name: Update Repo Cache (Ubuntu)
       tags: always
       apt:
-        upgrade: dist
         update_cache: yes
+      changed_when: false
       when: ansible_distribution == "Ubuntu"
+
+#########################################################
+# All Hosts - Add SSH Key for Simone
+#########################################################
+
+- hosts: all
+  become: true
+  pre_tasks:
+    
+    - name: Add SSH Key for Simone
+      tags: always
+      authorized_key:
+        user: Simone 
+        key: "{{ lookup('file', '/Users/Kris/LUIT/Keys/simone_key.pub') }}"
 
 #########################################################
 # Web Servers

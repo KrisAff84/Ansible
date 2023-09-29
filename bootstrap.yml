@@ -1,0 +1,51 @@
+---
+#########################################################
+# All Hosts - Update Packages
+#########################################################
+
+- hosts: all
+  become: true
+  pre_tasks:
+
+    - name: Install Updates (RedHat)
+      tags: always
+      dnf:
+        update_only: yes
+        update_cache: yes
+      when: ansible_distribution == "RedHat"
+      
+    - name: Install Updates (Ubuntu)
+      tags: always
+      apt:
+        upgrade: dist
+        update_cache: yes
+      when: ansible_distribution == "Ubuntu"
+
+#########################################################
+# All Hosts - Create User
+#########################################################
+
+- hosts: all
+  become: true
+  pre_tasks:
+
+    - name: Create User Simone
+      tags: always
+      user:
+        name: Simone
+        groups: root
+    
+    - name: Add SSH Key for Simone
+      tags: always
+      authorized_key:
+        user: Simone 
+        key: "{{ lookup('file', '/Users/Kris/LUIT/Keys/simone_key.pub') }}"
+
+    - name: Add sudoers file for Simone
+      tags: always
+      copy:
+        src: simone_sudoers
+        dest: /etc/sudoers.d/simone_sudoers
+        owner: root
+        group: root
+        mode: 0440

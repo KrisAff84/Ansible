@@ -17,7 +17,7 @@ when: ansible_distribution == "<distro>"
 sudo dnf install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-9.noarch.rpm
 sudo dnf config-manager --set-enabled epel
 
-# To run ansible playbook
+# To run ansible playbook (Don't actually need --ask-become-pass or -K for EC2 instances)
 ansible-playbook --ask-become-pass <file_name>     or
 ansible-playbook -K <file_name>
 
@@ -38,3 +38,12 @@ ansible-playbook --tags "<tag>,<tag>" -K <file>
 
 # Use 'lineinfile' module for changing a line in a file
 
+# Not an Ansible Command - to view public key material from AWS generated key
+# From AWS CLI
+aws ec2 describe-key-pairs --key-names <key_name> --include-public-key 
+
+# From Private Key file
+ssh-keygen -y -f <path_to_key>
+
+# Not an Ansible Command - To generate key pair
+ssh-keygen -t <type(rsa_or_ed25519)> -C "comment" 
