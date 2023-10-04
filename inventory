@@ -1,8 +1,8 @@
 [web_servers]
-ec2-user@54.244.189.239 
+ec2-user@35.91.246.83 
 
 [db_servers]
-ec2-user@35.86.249.107 
+ec2-user@34.220.201.160 
 
 [file_servers]
-ec2-user@34.219.58.224 
+ec2-user@35.85.55.156 
