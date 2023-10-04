@@ -1,0 +1,5 @@
+- name: Add SSH Key for Simone
+  authorized_key:
+    user: Simone 
+    key: "{{ lookup('file', '/Users/Kris/LUIT/Keys/simone_key.pub') }}"
+  

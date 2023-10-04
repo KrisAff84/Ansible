@@ -1,0 +1,34 @@
+- name: Install Apache and PHP Packages for RedHat Servers
+  tags: apache, httpd, redhat
+  dnf:
+    name: 
+      - httpd
+      - php
+    state: latest
+  when: ansible_distribution == "RedHat"
+
+- name: Install Apache2 and PHP Packages for Ubuntu Servers
+  tags: apache, apache2, ubuntu
+  apt:
+    name: 
+      - apache2
+      - libapache2-mod-php
+    state: latest
+  when: ansible_distribution == "Ubuntu"
+
+- name: Start Apache Service for RedHat Servers
+  tags: apache, httpd, redhat
+  service:
+    name: httpd
+    state: started
+    enabled: yes
+  when: ansible_distribution == "RedHat"
+
+- name: Copy HTML files for website (RedHat)
+  tags: apache, httpd, apache2
+  copy:
+    src: default_site.html
+    dest: /var/www/html/index.html
+    owner: root
+    group: root
+    mode: 0644

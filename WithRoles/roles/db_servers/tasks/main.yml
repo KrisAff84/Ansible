@@ -1,0 +1,22 @@
+- name: Install MariaDB Package (RedHat)
+  tags: mariadb, redhat, db
+  dnf:
+    name: mariadb-server
+    state: latest
+  when: ansible_distribution == "RedHat"
+
+- name: Start MariaDB Service (RedHat)
+  tags: mariadb, redhat, db
+  service:
+    name: mariadb
+    state: started
+    enabled: yes
+  when: ansible_distribution == "RedHat"
+
+- name: Install MariaDB Package (Ubuntu)
+  tags: mariadb, ubuntu, db
+  apt:
+    name: mariadb-server
+    state: latest
+  when: ansible_distribution == "Ubuntu"
+  
