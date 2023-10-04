@@ -49,7 +49,14 @@ ssh-keygen -y -f <path_to_key>
 ssh-keygen -t <type(rsa_or_ed25519)> -C "comment" 
 
 # To use roles with Ansible you need directory called roles with subdirectory for each role and tasks
+roles/<role_name>/tasks/
+Under each task directory create main.yml to place tasks, no need for hosts topdown parameter
 
-# roles/<role_name>/tasks/
+# Variables are referenced in ansible like so:
+"{{ variable_name }}"
 
-# Under each task directory create main.yml to place tasks, no need for hosts topdown parameter
+# REVIEW INFO IN VIDEO NUMBER 15 - host variables and handlers
+
+# notify - Use notify in play to notify handler; if a change is made then do (whatever is in handler)
+notify: <handler_name>
+# For handler create a directory named handler with main.yml, In that file create play with - name: first
