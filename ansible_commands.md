@@ -47,3 +47,9 @@ ssh-keygen -y -f <path_to_key>
 
 # Not an Ansible Command - To generate key pair
 ssh-keygen -t <type(rsa_or_ed25519)> -C "comment" 
+
+# To use roles with Ansible you need directory called roles with subdirectory for each role and tasks
+
+# roles/<role_name>/tasks/
+
+# Under each task directory create main.yml to place tasks, no need for hosts topdown parameter

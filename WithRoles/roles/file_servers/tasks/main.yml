@@ -1,0 +1,14 @@
+- name: Install Samba Package
+  tags: samba
+  package:
+    name: samba
+    state: latest
+  
+- name: Start Samba Service
+  tags: samba
+  service:
+    name: smb
+    state: started
+    enabled: yes
+  when: ansible_distribution == "RedHat"
+  
